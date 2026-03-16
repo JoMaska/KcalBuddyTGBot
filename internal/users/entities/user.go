@@ -13,11 +13,11 @@ type User struct {
 	CreatedAt  time.Time
 }
 
-func NewUser(telegramID TelegramID, username string) *User {
+func NewUser(telegramID TelegramID, username string) (*User, error) {
 	return &User{
 		ID:         uuid.NewString(),
 		TelegramID: telegramID,
 		Username:   username,
 		CreatedAt:  time.Now().UTC(),
-	}
+	}, nil
 }

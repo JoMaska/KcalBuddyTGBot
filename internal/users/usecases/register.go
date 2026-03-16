@@ -18,7 +18,7 @@ func (ru *RegisterUser) Register(input UserRegisterInput) (*UserRegisterOutput, 
 		return &UserRegisterOutput{User: existing}, nil
 	}
 
-	user := entities.NewUser(input.TelegramID, input.Username)
+	user, _ := entities.NewUser(input.TelegramID, input.Username)
 
 	if err := ru.repo.Save(user); err != nil {
 		return nil, err

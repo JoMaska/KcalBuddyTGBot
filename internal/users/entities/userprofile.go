@@ -12,7 +12,7 @@ type UserProfile struct {
 	UpdatedAt time.Time
 }
 
-func NewUserProfile(userID string, name string, age int, weight float64, height int, gender Gender) *UserProfile {
+func NewUserProfile(userID string, name string, age int, weight float64, height int, gender Gender) (*UserProfile, error) {
 	return &UserProfile{
 		UserID:    userID,
 		Name:      name,
@@ -21,5 +21,5 @@ func NewUserProfile(userID string, name string, age int, weight float64, height 
 		Height:    height,
 		Gender:    gender,
 		UpdatedAt: time.Now().UTC(),
-	}
+	}, nil
 }
