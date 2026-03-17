@@ -7,7 +7,8 @@ import (
 	"os/signal"
 
 	"github.com/JoMaska/KcalBuddyTGBot/internal/infra/telegram/handlers"
-	"github.com/JoMaska/KcalBuddyTGBot/internal/users/entities"
+	"github.com/JoMaska/KcalBuddyTGBot/internal/users/domain/entities"
+	"github.com/JoMaska/KcalBuddyTGBot/internal/users/domain/vo"
 	"github.com/JoMaska/KcalBuddyTGBot/internal/users/usecases"
 	"github.com/go-telegram/bot"
 )
@@ -25,7 +26,7 @@ func (ur *userRepository) Save(user *entities.User) error {
 }
 
 // TODO: убрать эти заглушки
-func (ur *userRepository) FindUserByTelegramId(telegramID entities.TelegramID) (*entities.User, error) {
+func (ur *userRepository) FindUserByTelegramId(telegramID vo.TelegramID) (*entities.User, error) {
 	return nil, nil
 }
 

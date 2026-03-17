@@ -1,7 +1,7 @@
 package usecases
 
 import (
-	"github.com/JoMaska/KcalBuddyTGBot/internal/users/entities"
+	"github.com/JoMaska/KcalBuddyTGBot/internal/users/domain/entities"
 )
 
 type RegisterUser struct {

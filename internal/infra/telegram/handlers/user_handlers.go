@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/JoMaska/KcalBuddyTGBot/internal/users/entities"
+	"github.com/JoMaska/KcalBuddyTGBot/internal/users/domain/vo"
 	"github.com/JoMaska/KcalBuddyTGBot/internal/users/usecases"
 	"github.com/go-telegram/bot"
 	"github.com/go-telegram/bot/models"
@@ -21,7 +21,7 @@ func (h *Handlers) DefaultHandler(ctx context.Context, b *bot.Bot, update *model
 func (h *Handlers) StartHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
 
 	input := usecases.UserRegisterInput{
-		TelegramID: entities.TelegramID(update.Message.From.ID),
+		TelegramID: vo.TelegramID(update.Message.From.ID),
 		Username:   update.Message.From.Username,
 	}
 

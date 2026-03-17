@@ -1,9 +1,12 @@
 package usecases
 
-import "github.com/JoMaska/KcalBuddyTGBot/internal/users/entities"
+import (
+	"github.com/JoMaska/KcalBuddyTGBot/internal/users/domain/entities"
+	"github.com/JoMaska/KcalBuddyTGBot/internal/users/domain/vo"
+)
 
 type UserRegisterInput struct {
-	TelegramID entities.TelegramID
+	TelegramID vo.TelegramID
 	Username   string
 }
 
@@ -14,5 +17,5 @@ type UserRegisterOutput struct {
 
 type UserRepository interface {
 	Save(user *entities.User) error
-	FindUserByTelegramId(telegramID entities.TelegramID) (*entities.User, error)
+	FindUserByTelegramId(telegramID vo.TelegramID) (*entities.User, error)
 }
