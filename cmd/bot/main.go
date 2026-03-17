@@ -1,4 +1,4 @@
-package bot
+package main
 
 import (
 	"log"
@@ -14,7 +14,7 @@ func main() {
 	}
 
 	token := os.Getenv("TELEGRAM_API_TOKEN")
-	bot, err := telegram.NewBot(token)
+	bot, err := telegram.NewTelegramBot(token)
 
 	if err != nil {
 		log.Panic(err)

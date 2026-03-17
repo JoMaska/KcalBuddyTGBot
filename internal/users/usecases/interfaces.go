@@ -8,7 +8,8 @@ type UserRegisterInput struct {
 }
 
 type UserRegisterOutput struct {
-	User *entities.User
+	User  *entities.User
+	IsNew bool
 }
 
 type UserRepository interface {

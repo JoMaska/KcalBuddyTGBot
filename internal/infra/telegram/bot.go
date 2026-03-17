@@ -1,35 +1,54 @@
 package telegram
 
 import (
+	"context"
 	"log"
+	"os"
+	"os/signal"
 
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	"github.com/JoMaska/KcalBuddyTGBot/internal/infra/telegram/handlers"
+	"github.com/JoMaska/KcalBuddyTGBot/internal/users/entities"
+	"github.com/JoMaska/KcalBuddyTGBot/internal/users/usecases"
+	"github.com/go-telegram/bot"
 )
 
-type Bot struct {
-	api tgbotapi.BotAPI
+type TelegramBot struct {
+	bot *bot.Bot
 }
 
-func NewBot(token string) (*Bot, error) {
-	api, err := tgbotapi.NewBotAPI(token)
+type userRepository struct {
+}
+
+// TODO: убрать эти заглушки
+func (ur *userRepository) Save(user *entities.User) error {
+	return nil
+}
+
+// TODO: убрать эти заглушки
+func (ur *userRepository) FindUserByTelegramId(telegramID entities.TelegramID) (*entities.User, error) {
+	return nil, nil
+}
+
+func NewTelegramBot(token string) (*TelegramBot, error) {
+	userRepository := &userRepository{}
+
+	registerUser := usecases.NewRegisterUser(userRepository)
+	h, _ := handlers.NewHandlers(registerUser)
+
+	bot, err := bot.New(token)
+
 	if err != nil {
 		log.Panic(err)
 	}
-	return &Bot{api: *api}, nil
+
+	h.RegisterAll(bot)
+
+	return &TelegramBot{bot: bot}, nil
 }
 
-func (b *Bot) Start() {
-	u := tgbotapi.NewUpdate(0)
-	u.Timeout = 60
-	updates := b.api.GetUpdatesChan(u)
+func (tgb *TelegramBot) Start() {
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer cancel()
 
-	for update := range updates {
-		if update.Message != nil && update.Message.IsCommand() {
-			switch update.Message.Command() {
-			case "start":
-				// TODO: прокинуть через users.usecases хендлер
-			}
-		}
-	}
-
+	tgb.bot.Start(ctx)
 }
